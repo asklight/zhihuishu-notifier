@@ -1,0 +1,67 @@
+# =========================
+# Python artifacts
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Build / package
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Test / lint / type-check cache
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.tox/
+.nox/
+
+# =========================
+# Virtual environments
+# =========================
+venv/
+.venv/
+env/
+ENV/
+
+# =========================
+# IDE / editor
+# =========================
+.idea/
+idea/
+.vscode/
+*.code-workspace
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Runtime logs
+# =========================
+*.log
+logs/
+
+# =========================
+# Project runtime data
+# =========================
+data/qrcode.png
+data/debug_*.png
+data/cookie.json
+data/homework_cache.json
+
+# =========================
+# Sensitive config / secrets
+# =========================
+.env
+.env.*
