@@ -8,6 +8,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
+# 换成阿里云 Debian 镜像源，解决 ECS 上 apt 超时问题
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     chromium \
     chromium-common \
@@ -38,7 +41,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+
+# pip 也换成阿里云镜像
+RUN pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 
 COPY . .
 
