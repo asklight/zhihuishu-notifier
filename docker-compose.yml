@@ -1,0 +1,11 @@
+services:
+  zhihuishu-notifier:
+    image: zhihuishu-notifier:latest
+    build: .
+    container_name: zhihuishu-notifier
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /home/asklight/zhihuishu-notifier/data:/app/data
+      - /home/asklight/zhihuishu-notifier/config.py:/app/config.py

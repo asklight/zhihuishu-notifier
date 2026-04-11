@@ -22,7 +22,7 @@ def _now_text() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-def run_check() -> None:
+def run_check(interval_seconds: int | None = None) -> None:
     try:
         print(f"[{_now_text()}] 开始本轮检查...")
 
@@ -85,6 +85,8 @@ def run_check() -> None:
         cache_module.save_cache(updated, config.CACHE_FILE)
 
         print(f"[{_now_text()}] 本轮检查完成")
+        if interval_seconds is not None:
+            print(f"下次执行时间：{int(interval_seconds / 3600)} 小时后")
 
     except Exception:
         import traceback
@@ -103,16 +105,17 @@ def main() -> None:
     if args.force_login and os.path.exists(config.COOKIE_FILE):
         os.remove(config.COOKIE_FILE)
 
-    run_check()
+    interval_seconds = config.CHECK_INTERVAL_HOURS * 3600
+    run_check(interval_seconds)
     if args.once:
         return
 
-    schedule.every(config.CHECK_INTERVAL_HOURS).hours.do(run_check)
     print(f"定时任务已启动，每 {config.CHECK_INTERVAL_HOURS} 小时执行一次。")
 
     while True:
-        schedule.run_pending()
-        time.sleep(60)
+        time.sleep(interval_seconds)
+        # 睡醒后执行检查
+        run_check(interval_seconds)
 
 
 if __name__ == "__main__":
